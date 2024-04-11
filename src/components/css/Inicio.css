@@ -1,0 +1,124 @@
+.fondo{
+  background-color: #fbfbf9;
+
+}
+
+
+.Inicio {
+  width: 300px;
+    margin: 0;
+    align-items: center; 
+    flex-direction: column;
+    margin-left: 340px;
+    position: relative; 
+    top:40px;
+  }
+
+
+h1{
+    font-family: "Belanosima", sans-serif;
+    font-weight: 600;
+    font-style: normal;  
+      font-size: 3rem;
+      color: #000000;
+
+    
+  }
+
+  h5{
+    color: #6c6c6c;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  
+  .InicioImg {
+    width: 35%;
+    margin-left: 690px; 
+    margin-top: -300px;
+    position: relative;
+    z-index: 1; 
+  }
+
+  .boton{
+    border-radius: 999px; 
+    padding: 10px 20px; 
+    background-color: white; 
+    border: 6px solid #F1B24A; 
+    color: #5f5e5e; 
+    font-size: 16px;
+    font-family: "Belanosima", sans-serif;
+    font-style: normal;
+    cursor: pointer; 
+    transition: background-color 0.3s, color 0.3s; 
+    margin-top: 10px;
+    font-weight: bold
+}
+
+.boton::after {
+    content: '🡆'; 
+    margin-left: 10px;
+    background-color: #F1B24A;
+    border: 4px solid;
+    border-color: #F1B24A;
+    border-radius: 999px; 
+    color: white;    
+}
+  
+  
+  
+  .colorDiv {
+    background: linear-gradient(135deg, #174C42, #2F7A4A);
+    top: 0;
+    position: absolute;
+    margin-left: 700px;
+    width: 30%;
+    height: 92%;
+    z-index: 0;
+    box-shadow: 0px 8px 10px rgba(0, 0, 0, 3);
+  }
+  
+  @media (max-width: 600px) {
+    .Inicio h1 {
+      font-size: 2.5rem;
+    }
+    
+    .Inicio h5 {
+      font-size: 1.2rem;
+    }
+    
+    .Inicio .boton {
+      font-size: 1rem;
+    }
+  }
+  
+  @media (max-width: 400px) {
+    .Inicio h1 {
+      font-size: 2rem;
+    }
+    
+    .Inicio h5 {
+      font-size: 1rem;
+    }
+    
+    .Inicio .boton {
+      font-size: 0.8rem;
+    }
+  }
+   
+  @media screen and (max-width:700px) {
+    .InicioImg{
+      width: 0;
+    }
+  }
+  @media screen and (max-width:700px) {
+    .colorDiv
+    {
+      height:0;
+    }
+  }
+
+  
+
+ 
+  
+  

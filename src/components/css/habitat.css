@@ -1,0 +1,25 @@
+
+h3{
+position: relative;
+display: flex;
+align-items: center;
+text-align: center;
+flex-direction: column;
+top: -50px;
+
+}
+
+.container{
+    max-width: 80%;
+    left: 100px;
+    position: relative;
+    align-items: center;
+}
+
+
+
+.img{
+    width: 50px;
+}
+
+

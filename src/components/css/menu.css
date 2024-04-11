@@ -1,0 +1,33 @@
+.menu{
+  max-width: 70%;
+    left: 80px;
+    position: relative;
+    overflow: hidden;
+}
+
+.buscador{
+  position: relative;
+  right: -100px;
+}
+
+.lastest{
+right: 20px;
+position: relative;
+}
+
+.titulo{
+  position: relative;
+  left: 100px;
+}
+
+.new{
+  position: relative;
+  right: 20px;
+}
+
+.menu3{
+ max-width: 80%;
+ left: 140px;
+ position: relative;  
+}
+
