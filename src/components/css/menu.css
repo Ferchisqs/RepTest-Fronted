@@ -18,12 +18,15 @@ position: relative;
 .titulo{
   position: relative;
   left: 100px;
+  
 }
 
 .new{
   position: relative;
   right: 20px;
+  
 }
+
 
 .menu3{
  max-width: 80%;

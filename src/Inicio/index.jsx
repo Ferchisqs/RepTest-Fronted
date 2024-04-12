@@ -1,7 +1,7 @@
 import React from "react"
 import '../components/css/Inicio.css'
 import Drawer from "../components/Drawer/index.jsx"
-import img from "../components/img/cocodrilo-inicio.png"
+import img from '../components/img/cocodrilo-inicio.png'
  import { Link } from "react-router-dom";
 
 
@@ -15,7 +15,7 @@ export const Inicio = () => {
 
             <Drawer />
             <div className="Inicio">
-                <h1 >
+                <h1  >
                     REPTILES
                 </h1>
                 <h5>

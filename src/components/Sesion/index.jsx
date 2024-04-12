@@ -16,7 +16,6 @@ import InputAdornment from '@mui/material/InputAdornment';
 import { useRouter } from '../../hooks/use-router';
 import { bgGradient } from '../theme/css.js';
 
- import img from '../img/cocodrilos-inicio.png';
 import Iconify from '../iconify';
 
 // ----------------------------------------------------------------------
@@ -66,6 +65,7 @@ export default function LoginView() {
         variant="contained"
         color="inherit"
         onClick={handleClick}
+        style={{backgroundColor:'#F1B24A',color:'white'}}
       >
         Login
       </LoadingButton>
@@ -93,7 +93,7 @@ export default function LoginView() {
         }}
       /> */}
 
-      <Stack alignItems="left" justifyContent="center" sx={{ height: 1 ,position:'relative', left:'200px',boxShadow:'40'}}>
+      <Stack alignItems="center" justifyContent="center" sx={{ height: 1 ,position:'relative', boxShadow:'40'}}>
         <Card
           sx={{
             p: 5,
@@ -101,7 +101,7 @@ export default function LoginView() {
             maxWidth: 420,
           }}
         >
-          <Typography variant="h4">Inicia sesión en RepTest</Typography>
+          <Typography variant="h4"  style={{fontFamily:'Poppins',fontWeight:'800',fontStyle:'normal'}} >Inicia sesión en RepTest</Typography>
 
           <Typography variant="body2" sx={{ mt: 2, mb: 5 }}>
             No tienes cuenta?
@@ -151,9 +151,7 @@ export default function LoginView() {
           {renderForm}
         </Card>
       </Stack>
-      <Box src={{overflow: 'hidden'}} >
-        <img  src={img} alt="Reptil" style={{ width: '80%', position:'relative',left:'360px',bottom:'600px', }} />
-      </Box>
+   
     </Box>
   );
 }

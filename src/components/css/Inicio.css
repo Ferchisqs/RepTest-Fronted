@@ -4,6 +4,8 @@
 }
 
 
+
+
 .Inicio {
   width: 300px;
     margin: 0;
@@ -16,18 +18,21 @@
 
 
 h1{
-    font-family: "Belanosima", sans-serif;
-    font-weight: 600;
-    font-style: normal;  
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+  font-style: normal; 
       font-size: 3rem;
       color: #000000;
 
     
   }
 
+
   h5{
     color: #6c6c6c;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    font-style: normal;
   }
   
   
@@ -46,8 +51,9 @@ h1{
     border: 6px solid #F1B24A; 
     color: #5f5e5e; 
     font-size: 16px;
-    font-family: "Belanosima", sans-serif;
-    font-style: normal;
+    font-family: "Poppins", sans-serif;
+    font-weight: 700;
+    font-style: normal; 
     cursor: pointer; 
     transition: background-color 0.3s, color 0.3s; 
     margin-top: 10px;

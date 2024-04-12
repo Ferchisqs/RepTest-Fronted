@@ -28,7 +28,7 @@ function index() {
        <Typography variant="h4" className='titulo'>MENU </Typography >
 
        <Link to="/newHabitat" style={{ textDecoration: 'none' }}>
-      <Button variant="contained" color="inherit" className='new' startIcon={<Iconify icon="eva:plus-fill" />}>
+      <Button variant="contained" color="inherit" className='new' startIcon={<Iconify icon="eva:plus-fill" />} sx={{background:'#F1B24A',borderColor:'#F1B24A',borderRadius:'999px',color:'white',}}>
         Nuevo habitat
       </Button>
     </Link>
