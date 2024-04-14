@@ -1,0 +1,17 @@
+.dios{
+    align-items: center;
+    align-content: center;
+    position: relative;
+    left: 200px;
+}
+
+.edit {
+    display: flex;
+    flex-direction: column; 
+  }
+
+.pregunta {
+    margin-bottom: 10px;
+  }
+  
+

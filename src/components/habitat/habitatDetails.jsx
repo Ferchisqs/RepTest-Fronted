@@ -9,6 +9,8 @@ import { useParams } from 'react-router-dom';
 import imgHumedad from '../img/humedad.png'
 import imgMovimiento from '../img/movimienot.png'
 import imgTemperatura from '../img/termometro.png'
+import Button from '@mui/material/Button'; 
+import '../css/habitatD.css'
 
 function HabitatDetails() {
   const [habitat, setHabitat] = useState(null);
@@ -22,7 +24,7 @@ function HabitatDetails() {
           throw new Error('Error al recuperar los detalles del hábitat');
         }
         const habitatData = await response.json();
-        setHabitat(habitatData.data); // Actualiza el estado con habitatData.data
+        setHabitat(habitatData.data);
       } catch (error) {
         console.error('Error fetching habitat details:', error);
       }
@@ -30,6 +32,24 @@ function HabitatDetails() {
 
     fetchHabitatDetails(id);
   }, [id]);
+
+  const handleDelete = async () => {
+    try {
+      const response = await fetch(`http://localhost:4000/habitat/${id}`, {
+        method: 'DELETE'
+      });
+      if (!response.ok) {
+        throw new Error('Error al eliminar el hábitat');
+      }
+      window.location.href = '/';
+    } catch (error) {
+      console.error('Error deleting habitat:', error);
+    }
+  };
+
+  const handleEdit = () => {
+    window.location.href = `/editar/${habitat.id}`;
+  };
 
   if (!habitat) {
     return <div>Cargando...</div>;
@@ -58,6 +78,10 @@ function HabitatDetails() {
           </Grid>
         </Grid>
       </Container>
+      <Container className='dios'>
+      <Button variant="contained" color="primary" onClick={handleEdit} >Editar</Button>
+      <Button variant="contained" color="error" onClick={handleDelete}>Eliminar</Button>
+   </Container>
     </div>
   );
 }

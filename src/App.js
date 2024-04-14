@@ -1,14 +1,13 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Inicio } from "./Inicio";
-import Menu from "../src/components/Menu/index"
-import Habitat from "../src/components/habitat/index"
-import Login from '../src/components/Sesion/index'
-import Registro from '../src/components/habitat/registro'
-import Sesion from '../src/components/Sesion/registro'
-import HabitatDetails from './components/habitat/habitatDetails'
-
-
+import Menu from "../src/components/Menu/index";
+import Habitat from "../src/components/habitat/index";
+import Login from "../src/components/Sesion/index";
+import Registro from "../src/components/habitat/registro";
+import Sesion from "../src/components/Sesion/registro";
+import HabitatDetails from "./components/habitat/habitatDetails";
+import EditarHabitat from "./components/habitat/editarHabitat";
 
 function App() {
   return (
@@ -16,14 +15,14 @@ function App() {
       <Router>
         <Routes>
           {/* <Route path="/" element={<Inicio />} /> */}
-          <Route path="/" element={<Inicio/>}/>
+          <Route path="/" element={<Inicio />} />
           <Route path="/menu" element={<Menu />} />
           <Route path="/habitat" element={<Habitat />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/newHabitat" element={<Registro/>} />
-          <Route path="/registro" element={<Sesion/>}/>
+          <Route path="/newHabitat" element={<Registro />} />
+          <Route path="/registro" element={<Sesion />} />
           <Route path="/habitat/:id" element={<HabitatDetails />} />
-
+          <Route  path="/editar/:id" element={<EditarHabitat/>} />
 
         </Routes>
       </Router>
