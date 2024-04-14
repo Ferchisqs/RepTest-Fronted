@@ -126,9 +126,11 @@ export default function MiniDrawer() {
           <IconButton color="inherit" aria-label="user" sx={{ marginRight: 5 }}>
             <NotificationsPopover />
           </IconButton>
-          <IconButton color="inherit" aria-label="user" sx={{ marginRight: 5 }}>
-            <PersonSharpIcon />
-          </IconButton>
+          <Link to="/registro" style={{ textDecoration: 'none', color: 'inherit' }}>
+            <IconButton color="inherit" aria-label="user" sx={{ marginRight: 5 }}>
+              <PersonSharpIcon />
+            </IconButton>
+          </Link>
         </Toolbar>
 
       </AppBar>
@@ -143,7 +145,7 @@ export default function MiniDrawer() {
         <Divider />
         
         <List>
-  {['Habitat', 'Menu', 'Usuario' ].map((text, index) => (
+  {['Habitat', 'Menu',  ].map((text, index) => (
     <ListItem key={text} disablePadding sx={{ display: 'block' }}>
       <ListItemButton
         component={Link}

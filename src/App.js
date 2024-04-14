@@ -5,6 +5,8 @@ import Menu from "../src/components/Menu/index"
 import Habitat from "../src/components/habitat/index"
 import Login from '../src/components/Sesion/index'
 import Registro from '../src/components/habitat/registro'
+import Sesion from '../src/components/Sesion/registro'
+import HabitatDetails from './components/habitat/habitatDetails'
 
 
 
@@ -19,6 +21,9 @@ function App() {
           <Route path="/habitat" element={<Habitat />} />
           <Route path="/login" element={<Login />} />
           <Route path="/newHabitat" element={<Registro/>} />
+          <Route path="/registro" element={<Sesion/>}/>
+          <Route path="/habitat/:id" element={<HabitatDetails />} />
+
 
         </Routes>
       </Router>

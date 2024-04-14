@@ -4,17 +4,39 @@ import '../css/newHabitat.css'
 
 function Formulario() {
   const [name, setName] = useState('')
-  const [reptil, setReptil] = useState('');
   const [temperaturaAdecuadaMin, setTemperaturaAdecuadaMin] = useState('');
   const [temperaturaAdecuadaMax, setTemperaturaAdecuadaMax] = useState('');
-  const [temperaturaNoAdecuadaMin, setTemperaturaNoAdecuadaMin] = useState('');
-  const [temperaturaNoAdecuadaMax, setTemperaturaNoAdecuadaMax] = useState('');
   const [humedadAdecuadaMin, setHumedadAdecuadaMin] = useState('');
   const [humedadAdecuadaMax, setHumedadAdecuadaMax] = useState('');
-  const [movimientoAdecuadoMin, setMovimientoAdecuadoMin] = useState('');
-  const [movimientoAdecuadoMax, setMovimientoAdecuadoMax] = useState('');
+  const [horaNotificar, setHoraNotificar] = useState('');
+  
 
-  const handleSubmit = (event) => {
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const response = await fetch('http://localhost:4000/habitat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          nombre: name, // Nombre del hábitat
+          humedadDeseada: humedadAdecuadaMin, 
+          temperaturaDeseada: temperaturaAdecuadaMin, 
+          movimiento: '', 
+          idMonitoreo: null, 
+          horaNotificar: horaNotificar // Hora para notificar
+        }),
+      });
+      if (response.ok) {
+        console.log('Hábitat creado exitosamente');
+      } else {
+        console.error('Error al crear hábitat:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error al enviar solicitud:', error);
+    }
     event.preventDefault();
     console.log('Formulario enviado!');
   };
@@ -37,18 +59,7 @@ function Formulario() {
             />
           </label>
         </div>
-        <div className='preguntas'>
-
-          <label className='label'>
-            ¿Qué reptil posee este hábitat?
-            <input
-              type="text"
-              value={reptil}
-              onChange={(event) => setReptil(event.target.value)}
-              className='cosito'
-            />
-          </label>
-        </div>
+     
         <div className='preguntas'>
           <label >
             ¿Cuáles son las temperaturas adecuadas?
@@ -73,29 +84,7 @@ function Formulario() {
             <span>{temperaturaAdecuadaMax}</span>°C
           </label>
         </div>
-        <div className='preguntas'>
-          <label>
-            ¿Cuáles son las temperaturas NO adecuadas?
-            <input
-              type="range"
-              min={0}
-              max={100}
-              value={temperaturaNoAdecuadaMin}
-              onChange={(event) => setTemperaturaNoAdecuadaMin(event.target.value)}
-              className='cosito'
-            />
-            <span>{temperaturaNoAdecuadaMin}</span>°C - {' '}
-            <input
-              type="range"
-              min={0}
-              max={100}
-              value={temperaturaNoAdecuadaMax}
-              onChange={(event) => setTemperaturaNoAdecuadaMax(event.target.value)}
-              className='cosito'
-            />
-            <span>{temperaturaNoAdecuadaMax}</span>°C
-          </label>
-        </div>
+       
         <div className='preguntas'>
           <label>
             ¿Cuál es la humedad adecuada?
@@ -119,29 +108,21 @@ function Formulario() {
             <span>{humedadAdecuadaMax}</span>%
           </label>
         </div>
+
         <div className='preguntas'>
           <label>
-            ¿Cuál es el movimiento adecuado?
+            ¿Cada cuanto tiempo desea ser notificado? (en horas)
             <input
-              type="range"
-              min={0}
-              max={100}
-              value={movimientoAdecuadoMin}
-              onChange={(event) => setMovimientoAdecuadoMin(event.target.value)}
+              type="number"
+              min={1}
+              max={24}
+              value={horaNotificar}
+              onChange={(event) => setHoraNotificar(event.target.value)}
               className='cosito'
             />
-            <span>{movimientoAdecuadoMin}</span> - {' '}
-            <input
-              type="range"
-              min={0}
-              max={100}
-              value={movimientoAdecuadoMax}
-              onChange={(event) => setMovimientoAdecuadoMax(event.target.value)}
-              className='cosito'
-            />
-            <span>{movimientoAdecuadoMax}</span>
           </label>
         </div>
+       
         <button type="submit">Crear</button>
       
       </form>
