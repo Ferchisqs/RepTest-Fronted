@@ -41,7 +41,7 @@ export default function LoginView() {
         throw new Error("Email y contraseña son campos requeridos");
       }
 
-      const response = await fetch('http://localhost:8000/users/login', {
+      const response = await fetch('http://44.198.96.56:3003/users/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

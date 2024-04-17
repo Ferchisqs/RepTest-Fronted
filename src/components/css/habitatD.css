@@ -1,8 +1,7 @@
-.dios{
-    align-items: center;
-    align-content: center;
-    position: relative;
-    left: 200px;
+.hh{ 
+     display: flex;
+    justify-content: flex-end;
+    margin-left: 100px;
 }
 
 .edit {
@@ -14,4 +13,5 @@
     margin-bottom: 10px;
   }
   
+
 

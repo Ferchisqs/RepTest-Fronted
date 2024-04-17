@@ -1,7 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { set, sub } from 'date-fns';
-import { faker } from '@faker-js/faker';
 import { io } from "https://cdn.socket.io/4.7.5/socket.io.esm.min.js";
 import Box from '@mui/material/Box';
 import List from '@mui/material/List';
@@ -17,88 +15,66 @@ import ListItemText from '@mui/material/ListItemText';
 import ListSubheader from '@mui/material/ListSubheader';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ListItemButton from '@mui/material/ListItemButton';
-import { useEffect } from 'react';
 import { fToNow } from '../../utils/format-time';
-
 import Iconify from '../iconify';
 import Scrollbar from '../scrollbar';
 
-
 // ----------------------------------------------------------------------
 
-const NOTIFICATIONS = [
+const initialNotifications = [
   {
-    id: faker.string.uuid(),
-    title: 'Your order is placed',
-    description: 'waiting for shipping',
-    avatar: null,
-    type: 'order_placed',
-    createdAt: set(new Date(), { hours: 10, minutes: 30 }),
+    id: 1,
+    id_habitat: 1,
+    noteTemperature: '15%',
+    noteHumidity: '57%',
+    movement: 'No se ha detectado movimiento',
+    createdAt: new Date(),
     isUnRead: true,
   },
   {
-    id: faker.string.uuid(),
-    title: faker.person.fullName(),
-    description: 'answered to your comment on the Minimal',
-    avatar: '/assets/images/avatars/avatar_2.jpg',
-    type: 'friend_interactive',
-    createdAt: sub(new Date(), { hours: 3, minutes: 30 }),
+    id: 2,
+    id_habitat: 2,
+    noteTemperature: '20%',
+    noteHumidity: '60%',
+    movement: 'Se ha detectado movimiento',
+    createdAt: new Date(),
     isUnRead: true,
-  },
-  {
-    id: faker.string.uuid(),
-    title: 'You have new message',
-    description: '5 unread messages',
-    avatar: null,
-    type: 'chat_message',
-    createdAt: sub(new Date(), { days: 1, hours: 3, minutes: 30 }),
-    isUnRead: false,
-  },
-  {
-    id: faker.string.uuid(),
-    title: 'You have new mail',
-    description: 'sent from Guido Padberg',
-    avatar: null,
-    type: 'mail',
-    createdAt: sub(new Date(), { days: 2, hours: 3, minutes: 30 }),
-    isUnRead: false,
-  },
-  {
-    id: faker.string.uuid(),
-    title: 'Delivery processing',
-    description: 'Your order is being shipped',
-    avatar: null,
-    type: 'order_shipped',
-    createdAt: sub(new Date(), { days: 3, hours: 3, minutes: 30 }),
-    isUnRead: false,
   },
 ];
 
 export default function NotificationsPopover() {
-  const [, setSocket] = useState(null);
-  const [notifications, setNotifications] = useState(NOTIFICATIONS);
-  const [totalUnRead, ] = useState(0);
+  const [notifications, setNotifications] = useState(initialNotifications);
+  const [totalUnRead, setTotalUnRead] = useState(0);
   const [open, setOpen] = useState(null);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-
+  
     if (token) {
       const socketConfig = {
         auth: {
-        
-          token: token,
-          offset: undefined
-
+          token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcxMzMzOTQzNX0.3qgjk8mKh4ShqqspMC4rQgn2fZGdvyQnT5PC3eW6bJ0',
         }
       };
-
-      const newSocket = io('http://localhost:3000', socketConfig);
-      setSocket(newSocket);
+  
+      const socket = io('http://44.223.186.80:5000/', socketConfig);
+  
+      socket.on('connect', () =>{
+        console.log(socket.id)
+      })
+      socket.on("disconnect", () => {
+        console.log(socket.id); 
+      });
+      socket.on('send_message', (payload) => {
+        console.log("New notification received:", payload); // Verificar la llegada de las notificaciones
+        setNotifications((prevNotifications) => [...prevNotifications, payload]);
+        setTotalUnRead((prevTotalUnRead) => prevTotalUnRead + 1); // Incrementar el número total de notificaciones sin leer
+      });
+  
+      return () => socket.disconnect();
     }
-  }, []);
-
-
+  }, []); 
+  
   const handleOpen = (event) => {
     setOpen(event.currentTarget);
   };
@@ -114,6 +90,7 @@ export default function NotificationsPopover() {
         isUnRead: false,
       }))
     );
+    setTotalUnRead(0); // Marcar todas las notificaciones como leídas
   };
 
   return (
@@ -166,20 +143,7 @@ export default function NotificationsPopover() {
               </ListSubheader>
             }
           >
-            {notifications.slice(0, 2).map((notification) => (
-              <NotificationItem key={notification.id} notification={notification} />
-            ))}
-          </List>
-
-          <List
-            disablePadding
-            subheader={
-              <ListSubheader disableSticky sx={{ py: 1, px: 2.5, typography: 'overline' }}>
-                Before that
-              </ListSubheader>
-            }
-          >
-            {notifications.slice(2, 5).map((notification) => (
+            {notifications.map((notification) => (
               <NotificationItem key={notification.id} notification={notification} />
             ))}
           </List>
@@ -197,23 +161,22 @@ export default function NotificationsPopover() {
   );
 }
 
-
 // ----------------------------------------------------------------------
 
 NotificationItem.propTypes = {
   notification: PropTypes.shape({
     createdAt: PropTypes.instanceOf(Date),
-    id: PropTypes.string,
+    id: PropTypes.number,
+    id_habitat: PropTypes.number,
+    noteTemperature: PropTypes.string,
+    noteHumidity: PropTypes.string,
+    movement: PropTypes.string,
     isUnRead: PropTypes.bool,
-    title: PropTypes.string,
-    description: PropTypes.string,
-    type: PropTypes.string,
-    avatar: PropTypes.any,
   }),
 };
 
 function NotificationItem({ notification }) {
-  const { avatar, title } = renderContent(notification);
+  const { id, id_habitat, noteTemperature, noteHumidity, movement, createdAt, isUnRead } = notification;
 
   return (
     <ListItemButton
@@ -221,73 +184,33 @@ function NotificationItem({ notification }) {
         py: 1.5,
         px: 2.5,
         mt: '1px',
-        ...(notification.isUnRead && {
+        ...(isUnRead && {
           bgcolor: 'action.selected',
         }),
       }}
     >
       <ListItemAvatar>
-        <Avatar sx={{ bgcolor: 'background.neutral' }}>{avatar}</Avatar>
+        <Avatar>{id}</Avatar>
       </ListItemAvatar>
       <ListItemText
-        primary={title}
+        primary={`Habitat ID: ${id_habitat}`}
         secondary={
-          <Typography
-            variant="caption"
-            sx={{
-              mt: 0.5,
-              display: 'flex',
-              alignItems: 'center',
-              color: 'text.disabled',
-            }}
-          >
-            <Iconify icon="eva:clock-outline" sx={{ mr: 0.5, width: 16, height: 16 }} />
-            {fToNow(notification.createdAt)}
-          </Typography>
+          <>
+            <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
+              Temperature: {noteTemperature}
+            </Typography>
+            <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
+              Humidity: {noteHumidity}
+            </Typography>
+            <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+              {movement}
+            </Typography>
+            <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+              {fToNow(createdAt)}
+            </Typography>
+          </>
         }
       />
     </ListItemButton>
   );
-}
-
-// ----------------------------------------------------------------------
-
-function renderContent(notification) {
-  const title = (
-    <Typography variant="subtitle2">
-      {notification.title}
-      <Typography component="span" variant="body2" sx={{ color: 'text.secondary' }}>
-        &nbsp; {notification.description}
-      </Typography>
-    </Typography>
-  );
-
-  if (notification.type === 'order_placed') {
-    return {
-      avatar: <img alt={notification.title} src="/assets/icons/ic_notification_package.svg" />,
-      title,
-    };
-  }
-  if (notification.type === 'order_shipped') {
-    return {
-      avatar: <img alt={notification.title} src="/assets/icons/ic_notification_shipping.svg" />,
-      title,
-    };
-  }
-  if (notification.type === 'mail') {
-    return {
-      avatar: <img alt={notification.title} src="/assets/icons/ic_notification_mail.svg" />,
-      title,
-    };
-  }
-  if (notification.type === 'chat_message') {
-    return {
-      avatar: <img alt={notification.title} src="/assets/icons/ic_notification_chat.svg" />,
-      title,
-    };
-  }
-  return {
-    avatar: notification.avatar ? <img alt={notification.title} src={notification.avatar} /> : null,
-    title,
-  };
 }

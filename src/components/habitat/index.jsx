@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import Drawer from "../Drawer/index";
-import axios from 'axios';
 import '../css/habitat.css';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
@@ -18,14 +17,44 @@ function Index() {
     fetchLogs();
   }, []);
 
-  const fetchLogs = async () => {
-    try {
-      const response = await axios.get('http://localhost:3001/api/logs'); 
-      setLogs(response.data); 
-    } catch (error) {
-      console.error('Error fetching logs:', error);
+ const formatLogs = (logs) => {
+  return logs.map(log => ({
+    id: log.id,
+    noteTemperature: parseFloat(log.noteTemperature.replace('%', '')), 
+    noteHumidity: parseFloat(log.noteHumidity.replace('%', '')), 
+    movement: log.movement === 'No se ha detectado movimiento' ? 'No se ha detectado movimiento' : log.movement, 
+    note: log.note,
+    record_at: log.record_at
+  }));
+};
+
+useEffect(() => {
+  fetchLogs();
+}, []);
+
+const fetchLogs = async () => {
+  try {
+    const headers = {
+      "Content-Type": "application/json",
+      "Authorization": "Baerer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcxMzM0MzI2M30.XmB26Zgw82otm-4xMqpr1UmWUIklNrQ1UCsOP2qSetM"
     }
-  };
+    const req = {
+      method: "GET",
+      headers
+    }
+    const response = await fetch('http://34.239.65.110:3000/api/logs', req);
+    const data = await response.json();
+    const formattedLogs = formatLogs(data); 
+    setLogs(formattedLogs);
+  } catch (error) {
+    console.error('Error fetching logs:', error.message);
+    if (error.response && error.response.data) {
+      console.error('Error details:', error.response.data);
+    }
+  }
+};
+
+  
 
   return (
     <div>
@@ -36,7 +65,7 @@ function Index() {
           <Grid item xs={12} sm={6} md={4}>
             <AppWidgetSummary
               title="Humedad"
-              total={logs.length > 0 ? logs[0].noteHumidity : 0} 
+              total={logs.length > 0 ? logs[0].noteHumidity : "0"} 
               color="success"
               icon={<img alt="icon" className='img' src={imgHumedad} />}
             />
@@ -44,7 +73,7 @@ function Index() {
           <Grid item xs={12} sm={6} md={4}>
             <AppWidgetSummary
               title="Movimiento"
-              total={logs.length > 0 ? logs[0].movement : 0} 
+              total={logs.length > 0 ? logs[0].movement : "0"} 
               color="info"
               icon={<img alt="icon" className='img' src={imgMovimiento} />}
             />
@@ -52,7 +81,7 @@ function Index() {
           <Grid item xs={12} sm={6} md={4}>
             <AppWidgetSummary
               title="Temperatura"
-              total={logs.length > 0 ? logs[0].noteTemperature : 0} 
+              total={logs.length > 0 ? logs[0].noteTemperature : "0"} 
               color="warning"
               icon={<img alt="icon" className='img' src={imgTemperatura} />}
             />

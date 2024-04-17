@@ -37,7 +37,7 @@ function Index() {
     img6,  ];
 
   useEffect(() => {
-    fetch('http://localhost:4000/habitat')
+    fetch('http://44.198.96.56:3004/habitat')
       .then(response => response.json())
       .then(data => {
         console.log(data);

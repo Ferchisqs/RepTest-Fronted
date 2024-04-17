@@ -15,14 +15,14 @@ function EditarHabitat() {
   useEffect(() => {
     async function fetchHabitat() {
       try {
-        const response = await fetch(`http://localhost:4000/habitat/${id}`);
+        const response = await fetch(`http://44.198.96.56:3004/habitat/${id}`);
         if (!response.ok) {
           throw new Error('Error al recuperar los detalles del hábitat');
         }
         const habitatData = await response.json();
-        const { name, humedity, temperature, movimiento, idMonitoreo, horaNotificar } = habitatData.data;
+        const { name,  humedity, temperature, movimiento, idMonitoreo, horaNotificar } = habitatData.data;
         setNombre(name);
-        setHumedadDeseada(humedity);
+        setHumedadDeseada( humedity);
         setTemperaturaDeseada(temperature);
         if (movimiento) setMovimiento(movimiento);
         if (idMonitoreo) setIdMonitoreo(idMonitoreo);
@@ -39,22 +39,24 @@ function EditarHabitat() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const habitatData = {};
-      if (nombre !== '') habitatData.nombre = nombre;
-      if (humedadDeseada !== '') habitatData.humedadDeseada = humedadDeseada;
-      if (temperaturaDeseada !== '') habitatData.temperaturaDeseada = temperaturaDeseada;
-      if (movimiento !== '') habitatData.movimiento = movimiento;
-      if (idMonitoreo !== '') habitatData.idMonitoreo = idMonitoreo;
-      if (horaNotificar !== '') habitatData.horaNotificar = horaNotificar;
-
-      const response = await fetch(`http://localhost:4000/habitat/${id}`, {
+      const habitatData = {
+        id_user: 1, 
+        name: nombre,
+        interval_review: 2, 
+        temperature: temperaturaDeseada,
+        humedity: humedadDeseada,
+        created_at: new Date().toISOString(),
+      
+      };
+  
+      const response = await fetch(`http://44.198.96.56:3004/habitat/${id}`, {
         method: 'PUT', 
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(habitatData),
       });
-
+  
       if (!response.ok) {
         throw new Error('Error al actualizar el hábitat');
       }
@@ -63,6 +65,8 @@ function EditarHabitat() {
       console.error('Error updating habitat:', error);
     }
   };
+  
+  
 
   return (
     <div className='registro' style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>

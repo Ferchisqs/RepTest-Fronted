@@ -5,8 +5,13 @@ import { format, getTime, formatDistanceToNow } from 'date-fns';
 export function fDate(date, newFormat) {
   const fm = newFormat || 'dd MMM yyyy';
 
-  return date ? format(new Date(date), fm) : '';
+  if (!date || isNaN(new Date(date))) {
+    return '';
+  }
+
+  return format(new Date(date), fm);
 }
+
 
 export function fDateTime(date, newFormat) {
   const fm = newFormat || 'dd MMM yyyy p';

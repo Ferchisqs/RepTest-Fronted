@@ -20,7 +20,7 @@ function HabitatDetails() {
   useEffect(() => {
     async function fetchHabitatDetails() {
       try {
-        const response = await fetch(`http://localhost:4000/habitat/${id}`);
+        const response = await fetch(`http://44.198.96.56:3004/habitat/${id}`);
         if (!response.ok) {
           throw new Error('Error al recuperar los detalles del hábitat');
         }
@@ -37,7 +37,7 @@ function HabitatDetails() {
 
   const handleDelete = async () => {
     try {
-      const response = await fetch(`http://localhost:4000/habitat/${id}`, {
+      const response = await fetch(`http://44.198.96.56:3004/habitat/${id}`, {
         method: 'DELETE'
       });
       if (!response.ok) {
@@ -84,7 +84,6 @@ function HabitatDetails() {
                   'Cuarto Reporte',
                   'Quinto Reporte',
                 ][index],
-                type: `Reporte${index + 1}`,
                 time: faker.date.past(),
               }))}
             />
@@ -97,17 +96,16 @@ function HabitatDetails() {
                  id: faker.string.uuid(),
                  title: faker.person.jobTitle(),
                  description: faker.commerce.productDescription(),
-                 image: `/assets/images/covers/cover_${index + 1}.jpg`,
                  postedAt: faker.date.recent(),
                }))}>
-            {habitat.actualizaciones && <AppNewsUpdate title="Nuevas actualizaciones" list={habitat.actualizaciones} />}
+            {habitat.actualizaciones && <AppNewsUpdate title="Nuevas actualizaciones"  />}
          </AppNewsUpdate>
           </Grid>
         </Grid>
       </Container>
-      <Container className='dios'>
-      <Button variant="contained" color="primary" onClick={handleEdit}  >Editar</Button>
-      <Button variant="contained" color="error" onClick={handleDelete} style={{marginLeft:'20px'}}>Eliminar</Button>
+      <Container className='hh'>
+      <Button variant="contained" color="primary" onClick={handleEdit} sx={{marginLeft:'160px'}}  >Editar</Button>
+      <Button variant="contained" color="error" onClick={handleDelete} sx={{marginLeft:'40px'}}>Eliminar</Button>
    </Container>
     </div>
   );

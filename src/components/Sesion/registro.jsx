@@ -52,7 +52,7 @@ export default function RegisterView() {
         throw new Error("Las contraseñas no coinciden");
       }
 
-      const response = await fetch('http://localhost:8000/users', {
+      const response = await fetch('http://44.198.96.56:3003/users', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

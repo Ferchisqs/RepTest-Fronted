@@ -15,7 +15,7 @@ function Formulario() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await fetch('http://localhost:4000/habitat', {
+      const response = await fetch('http://44.198.96.56:3004/habitat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
