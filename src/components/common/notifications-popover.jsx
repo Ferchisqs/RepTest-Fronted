@@ -2,7 +2,7 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { set, sub } from 'date-fns';
 import { faker } from '@faker-js/faker';
-
+import { io } from "https://cdn.socket.io/4.7.5/socket.io.esm.min.js";
 import Box from '@mui/material/Box';
 import List from '@mui/material/List';
 import Badge from '@mui/material/Badge';
@@ -17,11 +17,12 @@ import ListItemText from '@mui/material/ListItemText';
 import ListSubheader from '@mui/material/ListSubheader';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ListItemButton from '@mui/material/ListItemButton';
-
+import { useEffect } from 'react';
 import { fToNow } from '../../utils/format-time';
 
 import Iconify from '../iconify';
 import Scrollbar from '../scrollbar';
+
 
 // ----------------------------------------------------------------------
 
@@ -74,11 +75,29 @@ const NOTIFICATIONS = [
 ];
 
 export default function NotificationsPopover() {
+  const [, setSocket] = useState(null);
   const [notifications, setNotifications] = useState(NOTIFICATIONS);
-
-  const totalUnRead = notifications.filter((item) => item.isUnRead === true).length;
-
+  const [totalUnRead, ] = useState(0);
   const [open, setOpen] = useState(null);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+
+    if (token) {
+      const socketConfig = {
+        auth: {
+        
+          token: token,
+          offset: undefined
+
+        }
+      };
+
+      const newSocket = io('http://localhost:3000', socketConfig);
+      setSocket(newSocket);
+    }
+  }, []);
+
 
   const handleOpen = (event) => {
     setOpen(event.currentTarget);
@@ -177,6 +196,7 @@ export default function NotificationsPopover() {
     </>
   );
 }
+
 
 // ----------------------------------------------------------------------
 

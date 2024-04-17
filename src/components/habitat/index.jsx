@@ -1,116 +1,89 @@
-import React from 'react'
-import Drawer from "../Drawer/index"
-import '../css/habitat.css'
+import React, { useEffect, useState } from 'react';
+import Drawer from "../Drawer/index";
+import axios from 'axios';
+import '../css/habitat.css';
 import Container from '@mui/material/Container';
-import Grid from '@mui/material/Unstable_Grid2';
+import Grid from '@mui/material/Grid';
 import AppWidgetSummary from './app-widget-summary';
 import AppNewsUpdate from './app-news-update';
-import AppOrderTimeline from './app-order-timeline'
-import { faker } from '@faker-js/faker';
-import imgHumedad from '../img/humedad.png'
-import imgMovimiento from '../img/movimienot.png'
-import imgTemperatura from '../img/termometro.png'
+import AppOrderTimeline from './app-order-timeline';
+import imgHumedad from '../img/humedad.png';
+import imgMovimiento from '../img/movimienot.png';
+import imgTemperatura from '../img/termometro.png';
 
+function Index() {
+  const [logs, setLogs] = useState([]);
 
+  useEffect(() => {
+    fetchLogs();
+  }, []);
 
+  const fetchLogs = async () => {
+    try {
+      const response = await axios.get('http://localhost:3001/api/logs'); 
+      setLogs(response.data); 
+    } catch (error) {
+      console.error('Error fetching logs:', error);
+    }
+  };
 
-function index() {
   return (
     <div>
       <Drawer />
       <h3>Habitat</h3>
-      <Container maxWidth="x1" className="container">
+      <Container maxWidth="xl" className="container">
         <Grid container spacing={3}>
-          <Grid xs={12} sm={6} md={4}>
+          <Grid item xs={12} sm={6} md={4}>
             <AppWidgetSummary
               title="Humedad"
-              total={21}
+              total={logs.length > 0 ? logs[0].noteHumidity : 0} 
               color="success"
               icon={<img alt="icon" className='img' src={imgHumedad} />}
             />
           </Grid>
-
-          <Grid xs={12} sm={6} md={4}>
+          <Grid item xs={12} sm={6} md={4}>
             <AppWidgetSummary
               title="Movimiento"
-              total={1352831}
+              total={logs.length > 0 ? logs[0].movement : 0} 
               color="info"
               icon={<img alt="icon" className='img' src={imgMovimiento} />}
             />
           </Grid>
-
-          <Grid xs={12} sm={6} md={4}>
+          <Grid item xs={12} sm={6} md={4}>
             <AppWidgetSummary
               title="Temperatura"
-              total={9998}
+              total={logs.length > 0 ? logs[0].noteTemperature : 0} 
               color="warning"
               icon={<img alt="icon" className='img' src={imgTemperatura} />}
             />
           </Grid>
-
-
-
-          <Grid xs={12} md={6} lg={4}>
+          <Grid item xs={12} md={6} lg={4}>
             <AppOrderTimeline
               title="REPORTES"
-              list={[...Array(5)].map((_, index) => ({
-                id: faker.string.uuid(),
-                title: [
-                  'Primer Reporte',
-                  'Segundo Reporte',
-                  'Tercer Reporte',
-                  'Cuarto Reporte',
-                  'Quinto Reporte',
-                ][index],
-                type: `Reporte${index + 1}`,
-                time: faker.date.past(),
+              list={logs.map((log, index) => ({
+                id: log.id,
+                title: `Reporte ${index + 1}`,
+                type: log.type,
+                time: log.record_at,
               }))}
             />
           </Grid>
-          <Grid xs={12} md={6} lg={8}>
+          <Grid item xs={12} md={6} lg={8}>
             <AppNewsUpdate
               title="Nuevas actualizaciones"
-              list={[...Array(5)].map((_, index) => ({
-                id: faker.string.uuid(),
-                title: faker.person.jobTitle(),
-                description: faker.commerce.productDescription(),
-                image: `/assets/images/covers/cover_${index + 1}.jpg`,
-                postedAt: faker.date.recent(),
+              list={logs.map(log => ({
+                id: log.id,
+                title: log.note,
+                description: log.note,
+                image: '/assets/images/covers/cover_1.jpg',
+                postedAt: log.record_at,
               }))}
             />
-          </Grid>
-
-
-
-
-          <Grid xs={12} md={6} lg={8}>
-
-
-          </Grid>
-
-          <Grid xs={12} md={6} lg={4}>
-
-          </Grid>
-
-          <Grid xs={12} md={6} lg={8}>
-
-          </Grid>
-
-          <Grid xs={12} md={6} lg={4}>
-
-          </Grid>
-
-          <Grid xs={12} md={6} lg={4}>
-
-          </Grid>
-
-          <Grid xs={12} md={6} lg={8}>
-
           </Grid>
         </Grid>
       </Container>
     </div>
-  )
+  );
 }
 
-export default index
+export default Index;

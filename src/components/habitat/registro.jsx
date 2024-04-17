@@ -21,12 +21,12 @@ function Formulario() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          nombre: name, // Nombre del hábitat
-          humedadDeseada: humedadAdecuadaMin, 
-          temperaturaDeseada: temperaturaAdecuadaMin, 
-          movimiento: '', 
-          idMonitoreo: null, 
-          horaNotificar: horaNotificar // Hora para notificar
+          id_user: '', 
+          name: name,
+          interval_review:horaNotificar, 
+          temperature: temperaturaAdecuadaMin, 
+          humedity: humedadAdecuadaMin, 
+          created_at: '', 
         }),
       });
       if (response.ok) {
@@ -40,14 +40,15 @@ function Formulario() {
     event.preventDefault();
     console.log('Formulario enviado!');
   };
-
+  
+   
   return (
-    <div className='registro' d style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+    <div className='registro1' d style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
       <Drawer />
 
 
       <form onSubmit={handleSubmit} style={{width:'900px', boxShadow: '0px 4px 50px rgba(0, 0, 0, 0.20)'}} >
-      <h2>Registro de habitat</h2>
+      <h2 className='registrar1'>Registro de habitat</h2>
         <div className='preguntas'>
           <label >
             Nombre del habitat
@@ -55,7 +56,7 @@ function Formulario() {
               type="text"
               value={name}
               onChange={(event) => setName(event.target.value)}
-              className='cosito'
+              className='cosito1'
             />
           </label>
         </div>
@@ -69,7 +70,7 @@ function Formulario() {
               max={100}
               value={temperaturaAdecuadaMin}
               onChange={(event) => setTemperaturaAdecuadaMin(event.target.value)}
-              className='cosito'
+              className='cosito1'
             />
             <span >{temperaturaAdecuadaMin}</span>°C - {' '}
             <input
@@ -78,7 +79,7 @@ function Formulario() {
               max={100}
               value={temperaturaAdecuadaMax}
               onChange={(event) => setTemperaturaAdecuadaMax(event.target.value)}
-              className='cosito'
+              className='cosito1'
 
             />
             <span>{temperaturaAdecuadaMax}</span>°C
@@ -94,7 +95,7 @@ function Formulario() {
               max={100}
               value={humedadAdecuadaMin}
               onChange={(event) => setHumedadAdecuadaMin(event.target.value)}
-              className='cosito'
+              className='cosito1'
             />
             <span>{humedadAdecuadaMin}</span>% - {' '}
             <input
@@ -103,7 +104,7 @@ function Formulario() {
               max={100}
               value={humedadAdecuadaMax}
               onChange={(event) => setHumedadAdecuadaMax(event.target.value)}
-              className='cosito'
+              className='cosito1'
             />
             <span>{humedadAdecuadaMax}</span>%
           </label>
@@ -118,7 +119,7 @@ function Formulario() {
               max={24}
               value={horaNotificar}
               onChange={(event) => setHoraNotificar(event.target.value)}
-              className='cosito'
+              className='cosito1'
             />
           </label>
         </div>

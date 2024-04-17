@@ -15,9 +15,13 @@ right: 20px;
 position: relative;
 }
 
-.titulo{
+.tituloMenu{
   position: relative;
   left: 100px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+  font-style: normal; 
+     
   
 }
 
@@ -32,5 +36,6 @@ position: relative;
  max-width: 80%;
  left: 140px;
  position: relative;  
+ 
 }
 

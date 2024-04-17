@@ -1,17 +1,12 @@
 import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
-import Grid from '@mui/material/Unstable_Grid2';
+import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import { fDate } from '../../utils/format-time';
 
-
-
-export default function PostCard({ habitat, index }) {
-  const { nombre, createdAt } = habitat;
-
-  const latestPostLarge = index === 0;
-  const latestPost = index === 1 || index === 2;
+export default function PostCard({ habitat, imageUrl }) {
+  const { name, created_at } = habitat;
 
   const renderDate = (
     <Typography
@@ -20,24 +15,22 @@ export default function PostCard({ habitat, index }) {
       sx={{
         mb: 2,
         color: 'text.disabled',
-        ...((latestPostLarge || latestPost) && {
-          opacity: 0.48,
-          color: 'common.white',
-        }),
       }}
     >
-      {fDate(createdAt)}
+      Created: {created_at ? fDate(created_at) : ''}
     </Typography>
   );
 
   return (
-    <Grid item xs={12} sm={latestPostLarge ? 12 : 6} md={latestPostLarge ? 6 : 3}>
-      <Card>
-        <Box p={2}>
-          <Typography variant="h5" gutterBottom>
-            {nombre}
+    <Grid item xs={12} sm={6} md={4}>
+      <Card sx={{ width: '300px', height: '240px', boxShadow: '0px 0px 2px' }}> 
+        <Box p={2} style={{ height: '100%' }}>
+          <Typography variant="h5" gutterBottom style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+            Nombre: {name}
           </Typography>
+      
           {renderDate}
+          <img src={imageUrl} alt={name} style={{ width: '120px', height: '120px', objectFit: 'cover', marginBottom: '8px' }} /> 
         </Box>
       </Card>
     </Grid>
@@ -46,5 +39,5 @@ export default function PostCard({ habitat, index }) {
 
 PostCard.propTypes = {
   habitat: PropTypes.object.isRequired,
-  index: PropTypes.number,
+  imageUrl: PropTypes.string.isRequired,
 };

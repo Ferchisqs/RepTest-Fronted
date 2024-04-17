@@ -20,25 +20,25 @@ function EditarHabitat() {
           throw new Error('Error al recuperar los detalles del hábitat');
         }
         const habitatData = await response.json();
-        const { nombre, humedadDeseada, temperaturaDeseada, movimiento, idMonitoreo, horaNotificar } = habitatData.data;
-        setNombre(nombre);
-        setHumedadDeseada(humedadDeseada);
-        setTemperaturaDeseada(temperaturaDeseada);
-        setMovimiento(movimiento);
-        setIdMonitoreo(idMonitoreo);
-        setHoraNotificar(horaNotificar);
+        const { name, humedity, temperature, movimiento, idMonitoreo, horaNotificar } = habitatData.data;
+        setNombre(name);
+        setHumedadDeseada(humedity);
+        setTemperaturaDeseada(temperature);
+        if (movimiento) setMovimiento(movimiento);
+        if (idMonitoreo) setIdMonitoreo(idMonitoreo);
+        if (horaNotificar) setHoraNotificar(horaNotificar);
       } catch (error) {
         console.error('Error fetching habitat details:', error);
       }
     }
-
+    
     fetchHabitat();
   }, [id]);
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Construir el objeto con solo los campos llenos
       const habitatData = {};
       if (nombre !== '') habitatData.nombre = nombre;
       if (humedadDeseada !== '') habitatData.humedadDeseada = humedadDeseada;
@@ -67,7 +67,7 @@ function EditarHabitat() {
   return (
     <div className='registro' style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
       <Drawer />
-      <h2>Editar Hábitat</h2>
+      <h2 className='editar'>Editar Hábitat</h2>
       <form onSubmit={handleSubmit} style={{ width:'600px', boxShadow: '0px 4px 50px rgba(0, 0, 0, 0.20)', justifyContent: 'center', alignItems: 'center' }}>
         <div className="preguntas">
           <label>

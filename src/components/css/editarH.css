@@ -2,16 +2,18 @@
 .registro{
  
     position: relative;
-    right: 20px;
+    right: 100px;
     
 }
 
 .preguntas{
+  margin-top: 20px;
     margin-bottom: 20px;
     margin-left: 20px;
 }
 
 .cosito{
+  margin-top: 20px;
     margin-left: 20px;
     border-radius: 20px;
     border-color: none;
@@ -40,10 +42,12 @@ button{
 }
 
   
-  h2{
+  .editar{
     position: relative;
-    top: -200px;
-    left: 200px;
+    top: -210px;
+    left: 176px;
+    margin-top: 20px;
+    margin-bottom: 20px;
   }
 
   input{

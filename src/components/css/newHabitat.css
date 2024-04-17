@@ -1,8 +1,8 @@
 
-.registro{
+.registro1{
  
     position: relative;
-    right: 20px;
+    right: 50px;
     
 }
 
@@ -11,10 +11,10 @@
     margin-left: 20px;
 }
 
-.cosito{
+.cosito1{
     margin-left: 20px;
-    border-radius: 20px;
-    border-color: none;
+    border-radius: none;
+    border-color: white;
 }
 
 label{
@@ -40,14 +40,14 @@ button{
 }
 
   
-  h2{
+  .registrar1{
     position: relative;
-    top: -10px;
+    top: -20px;
     left: 20px;
   }
 
   input{
-    border-color: #000000;
+    background-color: #dedddd;
     
   }
 
