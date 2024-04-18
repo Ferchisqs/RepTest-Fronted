@@ -107,7 +107,7 @@ const getLinkForIndex = (index) => {
 };
 
 
-export default function MiniDrawer() {
+export default function MiniDrawer({setIsFetch}) {
 
   const icons = [faWorm, faDragon, faFolderMinus, faEnvelope, faEdit];
 
@@ -124,7 +124,7 @@ export default function MiniDrawer() {
             <Searchbar />
           </IconButton>
           <IconButton color="inherit" aria-label="user" sx={{ marginRight: 5 }}>
-            <NotificationsPopover />
+            <NotificationsPopover setIsFetch={setIsFetch}/>
           </IconButton>
           <Link to="/registro" style={{ textDecoration: 'none', color: 'inherit' }}>
             <IconButton color="inherit" aria-label="user" sx={{ marginRight: 5 }}>

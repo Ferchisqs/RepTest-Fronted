@@ -42,7 +42,7 @@ const initialNotifications = [
   },
 ];
 
-export default function NotificationsPopover() {
+export default function NotificationsPopover({setIsFetch}) {
   const [notifications, setNotifications] = useState(initialNotifications);
   const [totalUnRead, setTotalUnRead] = useState(0);
   const [open, setOpen] = useState(null);
@@ -53,12 +53,12 @@ export default function NotificationsPopover() {
     if (token) {
       const socketConfig = {
         auth: {
-          token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcxMzMzOTQzNX0.3qgjk8mKh4ShqqspMC4rQgn2fZGdvyQnT5PC3eW6bJ0',
+          token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcxMzM3NDk2OH0.sKaUK1H8ZDe1HFv0uVGk9Pri3kyx6h_Z02tDwKxtFCo',
         }
       };
   
+      console.log(token);
       const socket = io('http://44.223.186.80:5000/', socketConfig);
-  
       socket.on('connect', () =>{
         console.log(socket.id)
       })
@@ -67,6 +67,8 @@ export default function NotificationsPopover() {
       });
       socket.on('send_message', (payload) => {
         console.log("New notification received:", payload); // Verificar la llegada de las notificaciones
+        console.log("Actualizando IsFetch");
+        setIsFetch(true)
         setNotifications((prevNotifications) => [...prevNotifications, payload]);
         setTotalUnRead((prevTotalUnRead) => prevTotalUnRead + 1); // Incrementar el número total de notificaciones sin leer
       });

@@ -10,12 +10,10 @@ import imgHumedad from '../img/humedad.png';
 import imgMovimiento from '../img/movimienot.png';
 import imgTemperatura from '../img/termometro.png';
 
+
 function Index() {
   const [logs, setLogs] = useState([]);
-
-  useEffect(() => {
-    fetchLogs();
-  }, []);
+  const [isFetch, setIsFetch]= useState(false)
 
  const formatLogs = (logs) => {
   return logs.map(log => ({
@@ -30,13 +28,15 @@ function Index() {
 
 useEffect(() => {
   fetchLogs();
-}, []);
+  setIsFetch(false)
+  console.log('Reinicio IsFetch');
+}, [isFetch]);
 
 const fetchLogs = async () => {
   try {
     const headers = {
       "Content-Type": "application/json",
-      "Authorization": "Baerer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcxMzM0MzI2M30.XmB26Zgw82otm-4xMqpr1UmWUIklNrQ1UCsOP2qSetM"
+      "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcxMzM3NDk2OH0.sKaUK1H8ZDe1HFv0uVGk9Pri3kyx6h_Z02tDwKxtFCo"
     }
     const req = {
       method: "GET",
@@ -44,6 +44,7 @@ const fetchLogs = async () => {
     }
     const response = await fetch('http://34.239.65.110:3000/api/logs', req);
     const data = await response.json();
+    console.log(data)
     const formattedLogs = formatLogs(data); 
     setLogs(formattedLogs);
   } catch (error) {
@@ -58,7 +59,7 @@ const fetchLogs = async () => {
 
   return (
     <div>
-      <Drawer />
+      <Drawer setIsFetch={setIsFetch} />
       <h3>Habitat</h3>
       <Container maxWidth="xl" className="container">
         <Grid container spacing={3}>
